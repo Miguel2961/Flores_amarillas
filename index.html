@@ -1,0 +1,543 @@
+```html
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Para ti 🌻</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow: hidden;
+            font-family: "Segoe UI", sans-serif;
+            background: linear-gradient(
+                to bottom,
+                #8ed6ff 0%,
+                #d9f5ff 45%,
+                #fff2b3 70%,
+                #7ac943 70%,
+                #4f9d27 100%
+            );
+        }
+
+        /* Sol */
+
+        .sol {
+            position: absolute;
+            top: 40px;
+            right: 50px;
+            width: 90px;
+            height: 90px;
+            background: #ffd43b;
+            border-radius: 50%;
+            box-shadow: 0 0 50px #ffd43b;
+        }
+
+        /* Pantalla inicial */
+
+        .inicio {
+            position: absolute;
+            z-index: 100;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: rgba(255, 247, 190, 0.95);
+        }
+
+        .contenido-inicio {
+            padding: 30px;
+        }
+
+        .contenido-inicio h1 {
+            font-size: clamp(50px, 12vw, 90px);
+        }
+
+        .contenido-inicio h2 {
+            color: #7b4d00;
+            font-size: clamp(30px, 7vw, 55px);
+            margin-bottom: 15px;
+        }
+
+        .contenido-inicio p {
+            color: #6b4700;
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        button {
+            border: none;
+            padding: 17px 38px;
+            border-radius: 50px;
+            background: #f4b400;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+        }
+
+        /* Jardín */
+
+        .jardin {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 75%;
+        }
+
+        /* Tierra */
+
+        .tierra {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30%;
+            background: #6b3e1e;
+        }
+
+        /* Flores */
+
+        .flor {
+            position: absolute;
+            bottom: 25%;
+            width: 120px;
+            height: 300px;
+            transform-origin: bottom center;
+        }
+
+        /* Tallo */
+
+        .tallo {
+            position: absolute;
+            bottom: 0;
+            left: 58px;
+            width: 9px;
+            height: 0;
+            background: #348c2f;
+            border-radius: 10px;
+            transition: height 3s ease;
+        }
+
+        /* Hojas */
+
+        .hoja {
+            position: absolute;
+            width: 55px;
+            height: 28px;
+            background: #45a83c;
+            border-radius: 100% 0 100% 0;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .hoja.izquierda {
+            left: 5px;
+            bottom: 110px;
+            transform: rotate(-25deg);
+        }
+
+        .hoja.derecha {
+            right: 0;
+            bottom: 150px;
+            transform: rotate(25deg) scaleX(-1);
+        }
+
+        /* Cabeza de la flor */
+
+        .cabeza {
+            position: absolute;
+            left: 50%;
+            top: -10px;
+            width: 100px;
+            height: 100px;
+            transform: translateX(-50%) scale(0);
+            transition: transform 2s ease;
+        }
+
+        /* Pétalos */
+
+        .petalo {
+            position: absolute;
+            width: 45px;
+            height: 65px;
+            background: #ffd21f;
+            border-radius: 50%;
+            left: 27px;
+            top: 17px;
+            transform-origin: center 33px;
+        }
+
+        .p1 { transform: rotate(0deg) translateY(-30px); }
+        .p2 { transform: rotate(45deg) translateY(-30px); }
+        .p3 { transform: rotate(90deg) translateY(-30px); }
+        .p4 { transform: rotate(135deg) translateY(-30px); }
+        .p5 { transform: rotate(180deg) translateY(-30px); }
+        .p6 { transform: rotate(225deg) translateY(-30px); }
+        .p7 { transform: rotate(270deg) translateY(-30px); }
+        .p8 { transform: rotate(315deg) translateY(-30px); }
+
+        /* Centro */
+
+        .centro {
+            position: absolute;
+            left: 31px;
+            top: 31px;
+            width: 38px;
+            height: 38px;
+            background: #5d3515;
+            border-radius: 50%;
+            z-index: 5;
+        }
+
+        /* Animaciones */
+
+        .flor.crecer .tallo {
+            height: 280px;
+        }
+
+        .flor.crecer .hoja {
+            opacity: 1;
+        }
+
+        .flor.crecer .cabeza {
+            transform: translateX(-50%) scale(1);
+        }
+
+        /* Variaciones */
+
+        .flor1 {
+            left: 12%;
+            transform: scale(0.8);
+        }
+
+        .flor2 {
+            left: 35%;
+            transform: scale(1);
+        }
+
+        .flor3 {
+            left: 58%;
+            transform: scale(0.9);
+        }
+
+        .flor4 {
+            left: 80%;
+            transform: scale(0.7);
+        }
+
+        /* Mensaje */
+
+        .mensaje {
+            position: absolute;
+            z-index: 50;
+            top: 8%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 90%;
+            max-width: 650px;
+            opacity: 0;
+            transition: opacity 2s ease;
+        }
+
+        .mensaje.visible {
+            opacity: 1;
+        }
+
+        .mensaje h2 {
+            color: #714500;
+            font-size: clamp(32px, 7vw, 55px);
+            text-shadow: 2px 2px white;
+        }
+
+        .mensaje p {
+            margin-top: 15px;
+            color: #593800;
+            font-size: clamp(17px, 4vw, 22px);
+            line-height: 1.5;
+            text-shadow: 1px 1px white;
+        }
+
+        /* Corazones */
+
+        .corazon {
+            position: absolute;
+            font-size: 25px;
+            animation: flotar 4s linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes flotar {
+
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            to {
+                transform: translateY(-500px);
+                opacity: 0;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- Sol -->
+
+    <div class="sol"></div>
+
+
+    <!-- Pantalla inicial -->
+
+    <div class="inicio" id="inicio">
+
+        <div class="contenido-inicio">
+
+            <h1>🌱</h1>
+
+            <h2>Tengo algo para ti...</h2>
+
+            <p>
+                Espera un poquito y mira lo que va a florecer 🌻
+            </p>
+
+            <button onclick="comenzar()">
+                Hacer florecer 🌻
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- Jardín -->
+
+    <div class="jardin">c
+
+        <div class="tierra"></div>
+
+
+        <!-- FLORES -->
+
+        <div class="flor flor1">
+
+            <div class="tallo"></div>
+
+            <div class="hoja izquierda"></div>
+            <div class="hoja derecha"></div>
+
+            <div class="cabeza">
+
+                <div class="petalo p1"></div>
+                <div class="petalo p2"></div>
+                <div class="petalo p3"></div>
+                <div class="petalo p4"></div>
+                <div class="petalo p5"></div>
+                <div class="petalo p6"></div>
+                <div class="petalo p7"></div>
+                <div class="petalo p8"></div>
+
+                <div class="centro"></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="flor flor2">
+
+            <div class="tallo"></div>
+
+            <div class="hoja izquierda"></div>
+            <div class="hoja derecha"></div>
+
+            <div class="cabeza">
+
+                <div class="petalo p1"></div>
+                <div class="petalo p2"></div>
+                <div class="petalo p3"></div>
+                <div class="petalo p4"></div>
+                <div class="petalo p5"></div>
+                <div class="petalo p6"></div>
+                <div class="petalo p7"></div>
+                <div class="petalo p8"></div>
+
+                <div class="centro"></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="flor flor3">
+
+            <div class="tallo"></div>
+
+            <div class="hoja izquierda"></div>
+            <div class="hoja derecha"></div>
+
+            <div class="cabeza">
+
+                <div class="petalo p1"></div>
+                <div class="petalo p2"></div>
+                <div class="petalo p3"></div>
+                <div class="petalo p4"></div>
+                <div class="petalo p5"></div>
+                <div class="petalo p6"></div>
+                <div class="petalo p7"></div>
+                <div class="petalo p8"></div>
+
+                <div class="centro"></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="flor flor4">
+
+            <div class="tallo"></div>
+
+            <div class="hoja izquierda"></div>
+            <div class="hoja derecha"></div>
+
+            <div class="cabeza">
+
+                <div class="petalo p1"></div>
+                <div class="petalo p2"></div>
+                <div class="petalo p3"></div>
+                <div class="petalo p4"></div>
+                <div class="petalo p5"></div>
+                <div class="petalo p6"></div>
+                <div class="petalo p7"></div>
+                <div class="petalo p8"></div>
+
+                <div class="centro"></div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- Mensaje -->
+
+    <div class="mensaje" id="mensaje">
+
+        <h2>Para ti, mi amor 🌻</h2>
+
+        <p>
+            Así como estas flores fueron creciendo,
+            espero que nuestro amor siga creciendo
+            cada día un poquito más.
+            <br><br>
+
+            Gracias por hacer que mis días sean más bonitos.
+            <br><br>
+
+            <strong>
+                Te quiero muchísimo ❤️
+            </strong>
+        </p>
+
+    </div>
+
+
+    <script>
+
+        function comenzar() {
+
+            // Quitar pantalla inicial
+
+            document.getElementById("inicio").style.display = "none";
+
+
+            // Obtener flores
+
+            const flores = document.querySelectorAll(".flor");
+
+
+            // Hacer crecer una por una
+
+            flores.forEach((flor, index) => {
+
+                setTimeout(() => {
+
+                    flor.classList.add("crecer");
+
+                }, index * 1800);
+
+            });
+
+
+            // Mostrar mensaje después de que crezcan
+
+            setTimeout(() => {
+
+                document
+                    .getElementById("mensaje")
+                    .classList.add("visible");
+
+                corazones();
+
+            }, 8500);
+
+        }
+
+
+        function corazones() {
+
+            setInterval(() => {
+
+                const corazon =
+                    document.createElement("div");
+
+                corazon.className = "corazon";
+
+                corazon.innerHTML = "❤️";
+
+                corazon.style.left =
+                    Math.random() * 100 + "vw";
+
+                corazon.style.bottom = "20%";
+
+                document.body.appendChild(corazon);
+
+
+                setTimeout(() => {
+
+                    corazon.remove();
+
+                }, 4000);
+
+            }, 600);
+
+        }
+
+    </script>
+
+</body>
+</html>
+```
